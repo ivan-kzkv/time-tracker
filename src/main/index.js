@@ -31,6 +31,9 @@ const createWindow = () => {
   win.on('closed', () => {
     win = null
   })
+  if (CONFIG.devTools) {
+    win.webContents.openDevTools({mode: 'detach'});
+  }
 }
 
 // This method will be called when Electron has finished
