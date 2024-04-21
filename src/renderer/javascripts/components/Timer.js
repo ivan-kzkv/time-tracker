@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Time} from "./Time";
 
 export const Timer = () => {
     const [isStarted, setIsStarted] = useState(false);
@@ -12,7 +13,7 @@ export const Timer = () => {
                 </div>
             </div>
             <div className="col-2">
-                <div>00:00:00</div>
+                <Time/>
             </div>
             <div className="col-2">
                 <div>
