@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
+import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
 
 export const App = () => {
-    // TODO add correct behaviour to open modal
-    const openCreateProjectModal = (event) => console.log(event);
+    const [modalOpened, setModalOpened] = useState(false);
+    
+    const openCreateProjectModal = () => setModalOpened(true);
     
     
     window.MessagesAPI.openModal(openCreateProjectModal);
     
     
-    return <h1>Hello World 2</h1>;
+    return (
+        <div>
+            {
+                modalOpened ? <CreateProjectModal onCloseModal={() => setModalOpened(false)}/> : <h1>Hello screen</h1>
+            }
+            
+        </div>
+    );
 }
