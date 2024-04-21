@@ -1,4 +1,4 @@
-import {app, BrowserWindow} from "electron";
+import {app, BrowserWindow, Menu, dialog} from "electron";
 import path from "path";
 
 export class TimerApp {
@@ -6,6 +6,7 @@ export class TimerApp {
 
     constructor() {
         this.createApp();
+        this.createMainMenu();
     }
     
     
@@ -56,4 +57,32 @@ export class TimerApp {
         })
     }
     
+    createMainMenu = () => {
+        const TMPLT = Menu.buildFromTemplate([
+            {
+                label: app.name,
+                submenu: [
+                    { 
+                        label: 'Create new Project',
+                        click: () => {
+                            // todo open modal to create new project for time tracker
+                        }
+                    },
+                ]
+            },
+            {
+                label: 'About',
+                submenu: [
+                    { role: 'about' },
+                    { type: 'separator' },
+                    { role: 'hide' },
+                    { role: 'hideOthers' },
+                    { role: 'unhide' },
+                    { type: 'separator' },
+                    { role: 'quit' }
+                ]
+            }
+        ]);
+        Menu.setApplicationMenu(TMPLT);
+    }
 }
