@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Menu, dialog} from "electron";
+import {app, BrowserWindow, Menu, ipcMain} from "electron";
 import path from "path";
 
 export class TimerApp {
@@ -11,7 +11,7 @@ export class TimerApp {
     
     
     createWindow = () => {
-        let win = new BrowserWindow({
+        this.window = new BrowserWindow({
             title: CONFIG.name,
             width: CONFIG.width,
             height: CONFIG.height,
@@ -21,10 +21,10 @@ export class TimerApp {
             }
         })
 
-        win.loadFile('renderer/index.html')
+        this.window.loadFile('renderer/index.html')
 
-        win.webContents.on('did-finish-load', () => {
-            win.webContents.send('loaded', {
+        this.window.webContents.on('did-finish-load', () => {
+            this.window.webContents.send('loaded', {
                 appName: CONFIG.name,
                 electronVersion: process.versions.electron,
                 nodeVersion: process.versions.node,
@@ -32,11 +32,11 @@ export class TimerApp {
             })
         })
 
-        win.on('closed', () => {
-            win = null
+        this.window.on('closed', () => {
+            this.window = null
         })
         if (CONFIG.devTools) {
-            win.webContents.openDevTools({mode: 'detach'});
+            this.window.webContents.openDevTools({mode: 'detach'});
         }
     }
     
@@ -65,7 +65,7 @@ export class TimerApp {
                     { 
                         label: 'Create new Project',
                         click: () => {
-                            // todo open modal to create new project for time tracker
+                            this.window.webContents.send('open-create-project-modal')
                         }
                     },
                 ]
