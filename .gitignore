@@ -4,3 +4,6 @@ builds
 packages
 bower_components
 .idea
+
+time-tracker-python-service/env
+time-tracker-python-service/.idea
