@@ -4,7 +4,10 @@ export const CreateProjectModal = ({onCloseModal}) => {
     const [projectName, setProjectName] = useState('');
     
     const createNewProject = () => {
-        
+        window.MessagesAPI.createProject(projectName)
+            .then(newProject => {
+                // TODO set as active project of application
+            });
     }
     
     
@@ -22,7 +25,7 @@ export const CreateProjectModal = ({onCloseModal}) => {
                       onChange={(e) => setProjectName(e.target.value)}/>
                   <div className="row mt-3">
                       <div className="col-6">
-                          <button type="button" className="btn btn-outline-success" onClick={}>Create new</button>
+                          <button type="button" className="btn btn-outline-success" onClick={createNewProject}>Create new</button>
                       </div>
                       <div className="col-6">
                           <button type="button" className="btn btn-outline-danger" onClick={onCloseModal}>Cancel</button>
