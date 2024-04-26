@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 
 export const CreateProjectModal = ({onCloseModal}) => {
-    // TODO handle create project
+    const [projectName, setProjectName] = useState('');
+    
+    const createNewProject = () => {
+        
+    }
     
     
     return (
@@ -9,10 +13,16 @@ export const CreateProjectModal = ({onCloseModal}) => {
           <div className="row">
               <div className="col">
                   <label className="col-form-label col-form-label-lg mt-4" htmlFor="project">Enter Project Title</label>
-                  <input className="form-control form-control-lg" type="text" placeholder="Some cool project" id="project"/>
+                  <input 
+                      className="form-control form-control-lg" 
+                      type="text" 
+                      placeholder="Some cool project" 
+                      id="project" 
+                      value={projectName} 
+                      onChange={(e) => setProjectName(e.target.value)}/>
                   <div className="row mt-3">
                       <div className="col-6">
-                          <button type="button" className="btn btn-outline-success">Create new</button>
+                          <button type="button" className="btn btn-outline-success" onClick={}>Create new</button>
                       </div>
                       <div className="col-6">
                           <button type="button" className="btn btn-outline-danger" onClick={onCloseModal}>Cancel</button>
