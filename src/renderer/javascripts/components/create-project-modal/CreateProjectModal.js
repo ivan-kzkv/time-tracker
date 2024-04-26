@@ -4,7 +4,7 @@ export const CreateProjectModal = ({onCloseModal}) => {
     const [projectName, setProjectName] = useState('');
     
     const createNewProject = () => {
-        window.MessagesAPI.createProject(projectName)
+        window.MessagesAPI.createProject({name: projectName})
             .then(newProject => {
                 // TODO set as active project of application
             });
