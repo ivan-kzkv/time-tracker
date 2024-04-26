@@ -2,6 +2,9 @@
   "name": "TimeTracker",
   "version": "0.1.0",
   "description": "TimeTracker application build with Electron",
+  "scripts": {
+    "start": "bozon start --reload"
+  },
   "author": {
     "name": "ivan_kzkv",
     "email": ""
