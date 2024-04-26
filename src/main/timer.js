@@ -1,5 +1,6 @@
 import {app, BrowserWindow, Menu, ipcMain} from "electron";
 import path from "path";
+import {MessageAPIService} from "./MessageAPI.service";
 
 export class TimerApp {
 
@@ -24,12 +25,7 @@ export class TimerApp {
         this.window.loadFile('renderer/index.html')
 
         this.window.webContents.on('did-finish-load', () => {
-            this.window.webContents.send('loaded', {
-                appName: CONFIG.name,
-                electronVersion: process.versions.electron,
-                nodeVersion: process.versions.node,
-                chromiumVersion: process.versions.chrome
-            })
+            
         })
 
         this.window.on('closed', () => {
@@ -42,7 +38,10 @@ export class TimerApp {
     
     createApp = () => {
         
-        app.whenReady().then(this.createWindow)
+        app.whenReady().then(() => {
+            new MessageAPIService();
+            this.createWindow();
+        });
 
         app.on('window-all-closed', () => {
             if (process.platform !== 'darwin') {
