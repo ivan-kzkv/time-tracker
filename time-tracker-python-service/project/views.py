@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from models import Project, Task
-from serializer import ProjectSerializer, TasksSerializer
+from .models import Project, Task
+from .serializer import ProjectSerializer, TasksSerializer
 
 
 # View to create projects from list
