@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 
-export const CreateProjectModal = ({onCloseModal}) => {
+export const CreateProjectModal = ({onCloseModal, onCreateProject}) => {
     const [projectName, setProjectName] = useState('');
     
     const createNewProject = () => {
         window.MessagesAPI.createProject({name: projectName})
             .then(newProject => {
                 // TODO set as active project of application
+                onCreateProject(newProject)
             });
     }
     
