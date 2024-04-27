@@ -8,11 +8,20 @@ import {getActiveProjectId, getActiveProjectName, setActiveProject} from "../uti
 export const App = () => {
     const [modalOpened, setModalOpened] = useState(false);
     const [activeProjectName, setActiveProjectName] = useState('');
+    const [records, setRecords] = useState([]);
     
     useEffect(() => {
         window.MessagesAPI.openModal(openCreateProjectModal);
     }, []);
     
+    useEffect(() => {
+        if (activeProjectName) {
+            loadTasksList();
+        }
+        
+    }, [activeProjectName]);
+
+
     useEffect(() => {
         const activeProject = getActiveProjectId();
         if (activeProject) {
@@ -23,6 +32,11 @@ export const App = () => {
     
     const openCreateProjectModal = () => setModalOpened(true);
     
+    const loadTasksList = () => {
+        window.MessagesAPI.loadTasks({project_id: getActiveProjectId()})
+            .then(tasksList => setRecords(tasksList));
+    }
+    
     const onCreateProject = (newProject) => {
         setModalOpened(false);
         setActiveProject(newProject);
@@ -32,7 +46,9 @@ export const App = () => {
     const onTaskCreate = (taskData) => {
         const taskBody = {...taskData, project: getActiveProjectId()};
         window.MessagesAPI.createTask(taskBody)
-            .then(res => console.log(res));
+            .then(() => {
+                loadTasksList();
+            });
     }
     
     return (
@@ -46,7 +62,7 @@ export const App = () => {
                     <div>
                         <NewTask onTaskCreate={onTaskCreate}/>
                         <hr/>
-                        <ListRecords activeProjectId={getActiveProjectId()}/>
+                        <ListRecords records={records}/>
                     </div>
             }
             
