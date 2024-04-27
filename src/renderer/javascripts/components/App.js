@@ -12,6 +12,7 @@ export const App = () => {
     
     useEffect(() => {
         window.MessagesAPI.openModal(openCreateProjectModal);
+        window.MessagesAPI.updateActiveProject(onSetActiveProject);
     }, []);
     
     useEffect(() => {
@@ -49,6 +50,10 @@ export const App = () => {
             .then(() => {
                 loadTasksList();
             });
+    }
+    
+    const onSetActiveProject = (_, project) => {
+        onCreateProject(project);
     }
     
     return (
