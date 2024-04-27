@@ -38,7 +38,7 @@ export const App = () => {
                     <div>
                         <Timer/>
                         <hr/>
-                        <ListRecords/>
+                        <ListRecords activeProjectId={getActiveProjectId()}/>
                     </div>
             }
             
