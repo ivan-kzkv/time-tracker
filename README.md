@@ -1,28 +1,18 @@
-# TimeTracker
+# TimeTracker test app
 
-> My TimeTracker app built with Electron
+> My TimeTracker app built with Electron, React and Django for practice purpose
 
 
-## Dev
+## Prerequisites
+- node v18.18.2
+- npm 10.4.0
+- Python 3.12.0
+- Docker 20.10.8
 
-```
-$ npm install
-```
-
-### Run
-
-```
-$ bozon start
-```
-
-### Package
-
-```
-$ bozon package
-```
-
-Builds the app for OS X, Linux, and Windows, using [electron-builder](https://github.com/electron-userland/electron-builder).
-
+## Steps to start App
+1. Start DB container using docker-compose.yml (enter credentials for DB)
+2. Init python application and run it (add DB credentials in timetracker/settings.py)
+3. Init JS application and run command npm start
 
 ## License
 
