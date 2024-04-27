@@ -5,8 +5,9 @@ export class HttpClient {
     constructor() {
     }
     
-    fetchEntityList(path) {
-        return fetch(this.baseUrl + path);
+    fetchEntityList(path, queryParams = {}) {
+        return fetch(this.baseUrl + path + '?' + new URLSearchParams(queryParams))
+            .then(response => response.json());
     }
     
     createEntity(path, body) {
@@ -15,5 +16,13 @@ export class HttpClient {
             body: JSON.stringify(body),
             headers: {'Content-Type': 'application/json'}
         }).then(response => response.json());
+    }
+    
+    addQueryParams(queryParams) {
+        let queryString = '';
+        for (let key in queryParams) {
+            queryString += `${key}=${queryParams[key]}&`;
+        }
+        return queryString;
     }
 }
