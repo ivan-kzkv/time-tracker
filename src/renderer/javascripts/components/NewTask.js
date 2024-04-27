@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Time} from "./Time";
 
-export const Timer = ({onTaskCreate}) => {
+export const NewTask = ({onTaskCreate}) => {
     const [isStarted, setIsStarted] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [inputDisabled, setInputDisabled] = useState(false);

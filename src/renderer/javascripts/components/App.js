@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
-import {Timer} from "./Timer";
+import {NewTask} from "./NewTask";
 import {ListRecords} from "./ListRecords";
 import {TitleBar} from "./TitleBar";
 import {getActiveProjectId, getActiveProjectName, setActiveProject} from "../utils/localStorage.handle";
@@ -36,7 +36,7 @@ export const App = () => {
                         onCloseModal={() => setModalOpened(false)}
                         onCreateProject={onCreateProject}/> :
                     <div>
-                        <Timer/>
+                        <NewTask/>
                         <hr/>
                         <ListRecords activeProjectId={getActiveProjectId()}/>
                     </div>
