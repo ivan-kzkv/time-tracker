@@ -10,6 +10,10 @@ export const App = () => {
     const [activeProjectName, setActiveProjectName] = useState('');
     
     useEffect(() => {
+        window.MessagesAPI.openModal(openCreateProjectModal);
+    }, []);
+    
+    useEffect(() => {
         const activeProject = getActiveProjectId();
         if (activeProject) {
             setActiveProjectName(getActiveProjectName());
@@ -18,14 +22,18 @@ export const App = () => {
     
     
     const openCreateProjectModal = () => setModalOpened(true);
+    
     const onCreateProject = (newProject) => {
         setModalOpened(false);
         setActiveProject(newProject);
         setActiveProjectName(newProject.name)
     }
     
-    window.MessagesAPI.openModal(openCreateProjectModal);
-    
+    const onTaskCreate = (taskData) => {
+        const taskBody = {...taskData, project: getActiveProjectId()};
+        window.MessagesAPI.createTask(taskBody)
+            .then(res => console.log(res));
+    }
     
     return (
         <div>
@@ -36,7 +44,7 @@ export const App = () => {
                         onCloseModal={() => setModalOpened(false)}
                         onCreateProject={onCreateProject}/> :
                     <div>
-                        <NewTask/>
+                        <NewTask onTaskCreate={onTaskCreate}/>
                         <hr/>
                         <ListRecords activeProjectId={getActiveProjectId()}/>
                     </div>
