@@ -1,6 +1,7 @@
 import {app, BrowserWindow, Menu} from "electron";
 import path from "path";
 import {MessageAPIService} from "./MessageAPI.service";
+import {HttpClient} from "./HttpClient";
 
 export class TimerApp {
 
@@ -39,7 +40,7 @@ export class TimerApp {
     createApp = () => {
         
         app.whenReady().then(() => {
-            new MessageAPIService();
+            new MessageAPIService(new HttpClient());
             this.createWindow();
         });
 
