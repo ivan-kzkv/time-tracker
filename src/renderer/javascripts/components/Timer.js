@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Time} from "./Time";
 
-export const Timer = () => {
+export const Timer = ({onTaskCreate}) => {
     const [isStarted, setIsStarted] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [inputDisabled, setInputDisabled] = useState(false);
@@ -26,8 +26,8 @@ export const Timer = () => {
     
     const stopTimer = () => {
         window.MessagesAPI.stopTimer().then(time => {
-            // TODO send task to app before all
-            setTime(time)
+            onTaskCreate({name: taskName, time});
+            setTime(time);
             setTaskName('');
             setInputDisabled(false);
             setButtonDisabled(true);
@@ -44,7 +44,14 @@ export const Timer = () => {
         <div className="row mt-3 p-1 d-flex align-items-center">
             <div className="col-8">
                 <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="Task" placeholder="Enter task" value={taskName} onChange={updateTaskName} disabled={inputDisabled}/>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        id="Task" 
+                        placeholder="Enter task" 
+                        value={taskName} 
+                        onChange={updateTaskName} 
+                        disabled={inputDisabled}/>
                     <label htmlFor="Task">Task name</label>
                 </div>
             </div>
