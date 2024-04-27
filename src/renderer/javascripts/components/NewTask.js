@@ -6,7 +6,7 @@ export const NewTask = ({onTaskCreate}) => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [inputDisabled, setInputDisabled] = useState(false);
     const [taskName, setTaskName] = useState('');
-    const [time, setTime] = useState('');
+    const [time, setTime] = useState(0);
     
     useEffect(() => {
         window.MessagesAPI.listenTimer(handleTimer);
@@ -27,7 +27,7 @@ export const NewTask = ({onTaskCreate}) => {
     const stopTimer = () => {
         window.MessagesAPI.stopTimer().then(time => {
             onTaskCreate({name: taskName, time});
-            setTime(time);
+            setTime(0);
             setTaskName('');
             setInputDisabled(false);
             setButtonDisabled(true);
