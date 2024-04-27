@@ -2,6 +2,7 @@ import {app, BrowserWindow, Menu} from "electron";
 import path from "path";
 import {MessageAPIService} from "./MessageAPI.service";
 import {HttpClient} from "./HttpClient";
+import {BasicTimer} from "./BasicTimer";
 
 export class TimerApp {
 
@@ -26,10 +27,6 @@ export class TimerApp {
 
         this.window.loadFile('renderer/index.html')
 
-        this.window.webContents.on('did-finish-load', () => {
-            
-        })
-
         this.window.on('closed', () => {
             this.window = null
         })
@@ -43,6 +40,8 @@ export class TimerApp {
         app.whenReady().then(() => {
             new MessageAPIService(new HttpClient());
             this.createWindow();
+            const timer = new BasicTimer(this.window);
+            this.window.webContents.on('did-finish-load', () => timer.stopTimer())
         });
 
         app.on('window-all-closed', () => {
