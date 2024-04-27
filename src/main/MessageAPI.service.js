@@ -6,6 +6,7 @@ export class MessageAPIService {
         this.httpClient = httpClient;
         this.handleCreateProjectEvent();
         this.handleFetchTaskList();
+        this.handleCreateTaskEvent();
     }
     
     handleCreateProjectEvent() {
@@ -17,6 +18,12 @@ export class MessageAPIService {
     handleFetchTaskList() {
         ipcMain.handle('loadTasks', (event, data) => {
             return this.httpClient.fetchEntityList('task/all/', data.queryParams)
+        });
+    }
+    
+    handleCreateTaskEvent() {
+        ipcMain.handle('createTask', (_, body) => {
+            return this.httpClient.createEntity('task/', body);
         });
     }
 }
