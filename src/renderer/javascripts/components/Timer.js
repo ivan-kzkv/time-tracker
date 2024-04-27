@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Time} from "./Time";
 
 export const Timer = () => {
@@ -8,14 +8,9 @@ export const Timer = () => {
     const [taskName, setTaskName] = useState('');
     const [time, setTime] = useState('');
     
-    window.MessageApi.stopTimer(() => {
-        setTaskName('');
-        setInputDisabled(false);
-        setButtonDisabled(true);
-        setIsStarted(false);
-        // TODO send task to app
-    });
-    
+    useEffect(() => {
+        window.MessagesAPI.listenTimer(handleTimer);
+    }, []);
     
     const updateTaskName = (event) => {
         const taskName = event.target.value;
@@ -26,12 +21,23 @@ export const Timer = () => {
     const startTimer = () => {
         setIsStarted(true);
         setInputDisabled(true);
-        window.MessageAPI.startTimer(handleTimer);
+        window.MessagesAPI.startTimer();
+    }
+    
+    const stopTimer = () => {
+        window.MessagesAPI.stopTimer().then(time => {
+            // TODO send task to app before all
+            setTime(time)
+            setTaskName('');
+            setInputDisabled(false);
+            setButtonDisabled(true);
+            setIsStarted(false);
+        });
     }
     
     
-    const handleTimer = (value) => {
-        setTime(value);
+    const handleTimer = (e, time) => {
+        setTime(time);
     }
     
     return (
@@ -48,7 +54,7 @@ export const Timer = () => {
             <div className="col-2">
                 <div>
                     {
-                        isStarted ? <button type="button" className="btn btn-danger" onClick={() => setIsStarted(false)}>Stop</button> :
+                        isStarted ? <button type="button" className="btn btn-danger" onClick={stopTimer}>Stop</button> :
                             <button type="button" className="btn btn-success" onClick={startTimer} disabled={buttonDisabled}>Play</button>
                     }
                 </div>
