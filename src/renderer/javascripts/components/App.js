@@ -1,19 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CreateProjectModal} from "./create-project-modal/CreateProjectModal";
 import {Timer} from "./Timer";
 import {ListRecords} from "./ListRecords";
-import {setActiveProject} from "../utils/localStorage.handle";
+import {TitleBar} from "./TitleBar";
+import {getActiveProjectId, getActiveProjectName, setActiveProject} from "../utils/localStorage.handle";
 
 export const App = () => {
     const [modalOpened, setModalOpened] = useState(false);
+    const [activeProjectName, setActiveProjectName] = useState('');
+    
+    useEffect(() => {
+        const activeProject = getActiveProjectId();
+        if (activeProject) {
+            setActiveProjectName(getActiveProjectName());
+        }
+    }, [])
+    
     
     const openCreateProjectModal = () => setModalOpened(true);
     const onCreateProject = (newProject) => {
         setModalOpened(false);
         setActiveProject(newProject);
-        // TODO set active project in main window
-        
-        // TODO clear Old session and begin new One
+        setActiveProjectName(newProject.name)
     }
     
     window.MessagesAPI.openModal(openCreateProjectModal);
@@ -21,6 +29,7 @@ export const App = () => {
     
     return (
         <div>
+            <TitleBar activeProjectName={activeProjectName}/>
             {
                 modalOpened ? 
                     <CreateProjectModal 
