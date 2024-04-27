@@ -52,8 +52,14 @@ class TaskUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class AllTasksListView(generics.ListAPIView):
-    queryset = Task.objects.all()
     serializer_class = TasksSerializer
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        project_id = self.request.query_params.get('project_id')
+        if project_id is not None:
+            return queryset.filter(project__exact=project_id)
+        return queryset
 
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
