@@ -19,9 +19,14 @@ class ProjectUpdateView(generics.RetrieveUpdateAPIView):
 
 #  View to get list of elements
 class AllProjectsListView(generics.ListAPIView):
-    queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
+    def get_queryset(self):
+        queryset = Project.objects.all()
+        n_entity = self.request.query_params.get('last_n')
+        if n_entity is not None:
+            return queryset.order_by('-id')[:int(n_entity):-1]
+        return queryset
 
 # Get one element (GET, PUT, PATCH, DELETE)
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
