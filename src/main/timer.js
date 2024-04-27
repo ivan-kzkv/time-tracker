@@ -58,31 +58,56 @@ export class TimerApp {
     }
     
     createMainMenu = () => {
-        const TMPLT = Menu.buildFromTemplate([
-            {
-                label: app.name,
-                submenu: [
-                    { 
-                        label: 'Create new Project',
+        const httpClient = new HttpClient();
+        httpClient.fetchEntityList('project/all/', {last_n: 3})
+            .then(lastThreeProjects => {
+                
+                const submenus = lastThreeProjects.map(project => {
+                    return {
+                        label: project.name,
                         click: () => {
-                            this.window.webContents.send('open-create-project-modal')
+                            this.window.webContents.send('update-active-project', project);
                         }
-                    },
-                ]
-            },
-            {
-                label: 'About',
-                submenu: [
-                    { role: 'about' },
-                    { type: 'separator' },
-                    { role: 'hide' },
-                    { role: 'hideOthers' },
-                    { role: 'unhide' },
-                    { type: 'separator' },
-                    { role: 'quit' }
-                ]
-            }
-        ]);
-        Menu.setApplicationMenu(TMPLT);
+                    }
+                });
+                
+                const firstMenuElement = {
+                    label: app.name,
+                    submenu: [
+                        {
+                            label: 'Create new Project',
+                            click: () => {
+                                this.window.webContents.send('open-create-project-modal')
+                            }
+                        },
+                        {
+                            label: 'Last opened',
+                            submenu: submenus
+                        }
+                    ]
+                }
+
+                const TMPLT = Menu.buildFromTemplate([
+                    firstMenuElement,
+                    {
+                        label: 'About',
+                        submenu: [
+                            { role: 'about' },
+                            { type: 'separator' },
+                            { role: 'hide' },
+                            { role: 'hideOthers' },
+                            { role: 'unhide' },
+                            { type: 'separator' },
+                            { role: 'quit' }
+                        ]
+                    }
+                ]);
+                Menu.setApplicationMenu(TMPLT);
+                
+                
+            });
+        
+        
+        
     }
 }
