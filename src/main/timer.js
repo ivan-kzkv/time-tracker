@@ -17,6 +17,7 @@ export class TimerApp {
             title: CONFIG.name,
             width: CONFIG.width,
             height: CONFIG.height,
+            titleBarStyle: 'hidden',
             webPreferences: {
                 worldSafeExecuteJavaScript: true,
                 preload: path.join(app.getAppPath(), 'preload', 'index.js')
