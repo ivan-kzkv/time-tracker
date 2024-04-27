@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('MessagesAPI', {
       startTimer: () => ipcRenderer.invoke('startTimer'),
       stopTimer: () => ipcRenderer.invoke('stopTimer'),
       listenTimer: timerListener => ipcRenderer.on('ping-timer', timerListener),
-      createTask: taskData => ipcRenderer.invoke('createTask', taskData)
+      createTask: taskData => ipcRenderer.invoke('createTask', taskData),
+      updateActiveProject: callback => ipcRenderer.on('update-active-project', callback)
 });
