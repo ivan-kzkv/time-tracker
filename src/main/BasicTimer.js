@@ -8,8 +8,9 @@ export class BasicTimer {
             this.startTimer();
         });
         ipcMain.handle('stopTimer', () => {
+            const result = this.time;
             this.stopTimer();
-            return this.time;
+            return result;
         })
     }
     
